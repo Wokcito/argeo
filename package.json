@@ -1,0 +1,55 @@
+{
+    "name": "argeo",
+    "version": "0.1.0",
+    "description": "Wrapper for Georef API",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "repository": "https://github.com/Wokcito/argeo",
+    "bugs": "https://github.com/Wokcito/argeo/issues",
+    "scripts": {
+        "build": "tsc",
+        "prepare": "husky install",
+        "test": "vitest"
+    },
+    "keywords": [
+        "georef",
+        "argentina",
+        "geografia",
+        "wrapper",
+        "api"
+    ],
+    "author": "Maximiliano Kazanski",
+    "license": "MIT",
+    "devDependencies": {
+        "@commitlint/cli": "18.4.4",
+        "@commitlint/config-conventional": "18.4.4",
+        "@types/jsonwebtoken": "9.0.5",
+        "@typescript-eslint/eslint-plugin": "6.19.0",
+        "eslint": "8.56.0",
+        "eslint-config-standard-with-typescript": "43.0.0",
+        "eslint-plugin-import": "2.29.1",
+        "eslint-plugin-n": "16.6.2",
+        "eslint-plugin-promise": "6.1.1",
+        "husky": "8.0.3",
+        "lint-staged": "15.2.0",
+        "typescript": "5.3.3",
+        "vitest": "1.2.1"
+    },
+    "dependencies": {
+        "axios": "1.6.5",
+        "jsonwebtoken": "9.0.2"
+    },
+    "lint-staged": {
+        "./src/**/*.ts": [
+            "eslint"
+        ]
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    }
+}
