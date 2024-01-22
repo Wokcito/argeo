@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { Argeo } from '../src'
-import { Provincias } from '../src/modules'
 import { generateJWT } from '../src/utils'
 import { DEFAULT_BASE_URL } from '../src/constants'
 
@@ -27,9 +26,9 @@ describe('Argeo', () => {
 		expect(argeoSecretKeyAuthorization.split(' ')).not.toMatchObject(['Bearer', token])
 	})
 
-	it('has all expected modules', async () => {
+	it('has all expected methods', async () => {
 		const argeo = new Argeo()
 
-		expect(argeo.provincias).instanceOf(Provincias)
+		expect(argeo.provincias).toBeTypeOf('function')
 	})
 })

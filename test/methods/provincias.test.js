@@ -18,23 +18,23 @@ afterAll(() => { server.close() })
 
 describe('provincias', () => {
 	it('returns data of a single search correctly', async () => {
-		const correctResponse = await argeo.provincias.buscar({ nombre: 'Entre rios' })
+		const correctResponse = await argeo.provincias({ nombre: 'Entre rios' })
 		expect(correctResponse.data).toBeDefined()
 		expect(correctResponse.error).toBe(null)
 
 		server.use(...[getProvinciasError])
-		const errorResponse = await argeo.provincias.buscar()
+		const errorResponse = await argeo.provincias()
 		expect(errorResponse.data).toBe(null)
 		expect(errorResponse.error).toBeDefined()
 	})
 
 	it('returns data of several searchs correctly', async () => {
-		const correctResponse = await argeo.provincias.buscar([{ nombre: 'Entre rios' }, { nombre: 'Entre rios' }])
+		const correctResponse = await argeo.provincias([{ nombre: 'Entre rios' }, { nombre: 'Entre rios' }])
 		expect(correctResponse.data).toBeDefined()
 		expect(correctResponse.error).toBe(null)
 
 		server.use(...[postProvinciasError])
-		const errorResponse = await argeo.provincias.buscar([])
+		const errorResponse = await argeo.provincias([])
 		expect(errorResponse.data).toBe(null)
 		expect(errorResponse.error).toBeDefined()
 	})
