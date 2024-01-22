@@ -1,6 +1,20 @@
 import { type AxiosError, type AxiosInstance } from 'axios'
 import { generateAxiosInstance } from './utils'
-import { type ProvinciasResponse, type ArgeoConfig, type SeveralProvinciasResponse, type ProvinciaFindParams, type ArgeoResponse } from './interfaces'
+import {
+	type ArgeoConfig,
+	type ArgeoResponse,
+	type AllParams,
+
+	// Provincias
+	type ProvinciasResponse,
+	type SeveralProvinciasResponse,
+	type ProvinciaParams,
+
+	// Departamentos
+	type DepartamentoResponse,
+	type SeveralDepartamentoResponse,
+	type DepartamentoParams
+} from './interfaces'
 
 /**
  * Crea un instancia con todos los métodos necesarios para utilizar la API
@@ -12,29 +26,34 @@ export class Argeo {
 		this.instance = generateAxiosInstance({ baseURL, token })
 	}
 
-	private async makeRequest(method: 'GET' | 'POST', endpoint: string, params = {}): Promise<ArgeoResponse<unknown>> {
+	private async makeRequest(endpoint: string, params: AllParams = {}): Promise<ArgeoResponse<unknown>> {
 		try {
-			if (method === 'POST') {
-				const { data } = await this.instance.post(endpoint, params)
+			if (Array.isArray(params)) {
+				const { data } = await this.instance.post(endpoint, { provincias: params })
 				return { data, error: null }
 			}
 
-			const { data } = await this.instance.get(endpoint, params)
+			const { data } = await this.instance.get(endpoint, {
+				params: {
+					...params,
+					campos: params.campos?.join(',')
+				}
+			})
 			return { data, error: null }
 		} catch (error) {
 			return { data: null, error: (error as AxiosError).response?.data }
 		}
 	}
 
-	async provincias(params: ProvinciaFindParams): Promise<ArgeoResponse<ProvinciasResponse>>
-	async provincias(params: ProvinciaFindParams[]): Promise<ArgeoResponse<SeveralProvinciasResponse>>
-	async provincias(params: ProvinciaFindParams | ProvinciaFindParams[] = {}): Promise<ArgeoResponse> {
-		const endpoint = '/api/provincias'
+	async provincias(params: ProvinciaParams): Promise<ArgeoResponse<ProvinciasResponse>>
+	async provincias(params: ProvinciaParams[]): Promise<ArgeoResponse<SeveralProvinciasResponse>>
+	async provincias(params: ProvinciaParams | ProvinciaParams[] = {}): Promise<ArgeoResponse> {
+		return await this.makeRequest('/api/provincias', params)
+	}
 
-		if (Array.isArray(params)) {
-			return await this.makeRequest('POST', endpoint, { provincias: params })
-		}
-
-		return await this.makeRequest('GET', endpoint, { ...params, campos: params.campos?.join(',') })
+	async departamentos(params: DepartamentoParams): Promise<ArgeoResponse<DepartamentoResponse>>
+	async departamentos(params: DepartamentoParams[]): Promise<ArgeoResponse<SeveralDepartamentoResponse>>
+	async departamentos(params: DepartamentoParams | DepartamentoParams[] = {}): Promise<ArgeoResponse> {
+		return await this.makeRequest('/api/departamentos', params)
 	}
 }
