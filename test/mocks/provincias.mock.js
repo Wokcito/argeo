@@ -9,7 +9,7 @@ export const getProvincias = http.get(`${MOCKED_API_BASE_URL}${endpoint}`, () =>
 			cantidad: 1,
 			inicio: 0,
 			parametros: { nombre: 'Entre rios' },
-			provincias: [ { centroide: [Object], id: '30', nombre: 'Entre Ríos' } ],
+			provincias: [ { centroide: { lat: -32.0589278938558, lon: -59.201262616496 }, id: '30', nombre: 'Entre Ríos' } ],
 			total: 1
 		}
 	})
