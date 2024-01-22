@@ -1,6 +1,9 @@
 export interface ArgeoConfig {
     baseURL?: string
-    secret?: string
-    token?: string
-    key?: string
+    token?: string | Token
+}
+
+interface Token {
+    secret: string
+    key: string
 }

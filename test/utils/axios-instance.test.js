@@ -27,7 +27,9 @@ describe('generateAxiosInstance', () => {
 		expect(token).toMatch(/^[\w-]+\.[\w-]+\.[\w-]+$/)
 	})
 
-	it('throws if the token provided is not a JWT', () => {
+	it('throws if the token provided is not a JWT or the secret and key are not given', () => {
 		expect(() => generateAxiosInstance({ token: 'something' })).toThrowError('The token must be a JWT')
+		expect(() => generateAxiosInstance({ token: { key: 'key' } })).toThrowError('The token secret must be a string')
+		expect(() => generateAxiosInstance({ token: { secret: 'secret' } })).toThrowError('The token key must be a string')
 	})
 })
