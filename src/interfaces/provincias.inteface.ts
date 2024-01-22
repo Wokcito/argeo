@@ -12,7 +12,7 @@ export interface ProvinciasResponse {
 	provincias: Provincia[]
 }
 
-interface Provincia {
+export interface Provincia {
 	categoria: string
     centroide: Coordenadas
     fuente: string
