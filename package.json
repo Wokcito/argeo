@@ -11,7 +11,8 @@
     "bugs": "https://github.com/Wokcito/argeo/issues",
     "scripts": {
         "build": "tsc",
-        "prepare": "husky install",
+        "prepare": "husky install | chmod ug+x .husky/*",
+        "publish": "npm run build && npm publish",
         "test": "vitest"
     },
     "keywords": [
