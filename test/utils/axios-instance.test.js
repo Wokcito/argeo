@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { generateAxiosInstance, generateJWT } from '../../src/utils'
-import { DEFAULT_BASE_URL } from '../../src/constants'
+import { DEFAULT_BASE_URL, MOCKED_API_BASE_URL } from '../../src/constants'
 
 describe('generateAxiosInstance', () => {
-	const customBaseURL = 'https://custombaseurl.com'
 	const bearer = 'Bearer'
 
 	it(`must use the default baseURL (${DEFAULT_BASE_URL}) if other one is not provided`, () => {
@@ -12,8 +11,8 @@ describe('generateAxiosInstance', () => {
 	})
 
 	it('must return an instance with a custom baseURL if it is provided', () => {
-		const axiosInstance = generateAxiosInstance({ baseURL: customBaseURL })
-		expect(axiosInstance.defaults.baseURL).toBe(customBaseURL)
+		const axiosInstance = generateAxiosInstance({ baseURL: MOCKED_API_BASE_URL })
+		expect(axiosInstance.defaults.baseURL).toBe(MOCKED_API_BASE_URL)
 	})
 
 	it('must return an instance with a authorization token if it is provided', () => {

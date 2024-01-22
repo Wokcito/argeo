@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { Argeo } from '../src'
+import { Provincias } from '../src/modules'
 import { generateJWT } from '../src/utils'
 import { DEFAULT_BASE_URL } from '../src/constants'
 
@@ -19,13 +20,16 @@ describe('Argeo', () => {
 		const argeoToken = new Argeo({ token })
 
 		const argeoTokenAuthorization = argeoToken.instance.defaults.headers.Authorization
-		console.log(argeoTokenAuthorization)
-		expect(argeoTokenAuthorization).toBeDefined()
 		expect(argeoTokenAuthorization.split(' ')).toMatchObject(['Bearer', token])
 
 		const argeoSecretKey = new Argeo({ token: { secret: personalSecret, key: personalKey } })
 		const argeoSecretKeyAuthorization = argeoSecretKey.instance.defaults.headers.Authorization
-		expect(argeoSecretKeyAuthorization).toBeDefined()
 		expect(argeoSecretKeyAuthorization.split(' ')).not.toMatchObject(['Bearer', token])
+	})
+
+	it('has all expected modules', async () => {
+		const argeo = new Argeo()
+
+		expect(argeo.provincias).instanceOf(Provincias)
 	})
 })
