@@ -1,4 +1,5 @@
 import { type Coordenadas } from './coordenadas.interface'
+import { type RequestParams } from './request-params.interface'
 
 export interface SeveralProvinciasResponse {
     resultados: ProvinciasResponse[]
@@ -8,7 +9,7 @@ export interface ProvinciasResponse {
 	cantidad: number
     total: number
     inicio: number
-	parametros: ProvinciaFindParams
+	parametros: unknown
 	provincias: Provincia[]
 }
 
@@ -23,17 +24,8 @@ export interface Provincia {
     nombre_completo: string
 }
 
-export interface ProvinciaFindParams {
-    id?: string
-    nombre?: string
-    interseccion?: string
-    orden?: string
-    aplanar?: boolean
+export interface ProvinciaParams extends RequestParams {
     campos?: Field[]
-    max?: number
-    inicio?: number
-    exacto?: boolean
-    formato?: string
 }
 
 type Field =
