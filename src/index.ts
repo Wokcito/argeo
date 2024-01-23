@@ -13,7 +13,12 @@ import {
 	// Departamentos
 	type DepartamentosResponse,
 	type SeveralDepartamentosResponse,
-	type DepartamentoParams
+	type DepartamentoParams,
+
+	// Municipios
+	type SeveralMunicipiosResponse,
+	type MunicipiosResponse,
+	type MunicipioParams
 } from './interfaces'
 
 /**
@@ -55,5 +60,11 @@ export class Argeo {
 	async departamentos(params: DepartamentoParams[]): Promise<ArgeoResponse<SeveralDepartamentosResponse>>
 	async departamentos(params: DepartamentoParams | DepartamentoParams[] = {}): Promise<ArgeoResponse> {
 		return await this.makeRequest('/api/departamentos', params)
+	}
+
+	async municipios(params: MunicipioParams): Promise<ArgeoResponse<MunicipiosResponse>>
+	async municipios(params: MunicipioParams[]): Promise<ArgeoResponse<SeveralMunicipiosResponse>>
+	async municipios(params: MunicipioParams | MunicipioParams[] = {}): Promise<ArgeoResponse> {
+		return await this.makeRequest('/api/municipios', params)
 	}
 }
