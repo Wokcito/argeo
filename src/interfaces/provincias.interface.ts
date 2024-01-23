@@ -14,17 +14,17 @@ export interface ProvinciasResponse {
 }
 
 export interface Provincia {
-	categoria: string
-    centroide: Coordenadas
-    fuente: string
     id: string
-    iso_id: string
-    iso_nombre: string
     nombre: string
-    nombre_completo: string
+    centroide?: Coordenadas
+	categoria?: string
+    fuente?: string
+    iso_id?: string
+    iso_nombre?: string
+    nombre_completo?: string
 }
 
-export interface ProvinciaParams extends RequestParams {
+export interface ProvinciaParams extends Omit<RequestParams, 'provincia'> {
     campos?: Field[]
 }
 

@@ -11,8 +11,8 @@ import {
 	type ProvinciaParams,
 
 	// Departamentos
-	type DepartamentoResponse,
-	type SeveralDepartamentoResponse,
+	type DepartamentosResponse,
+	type SeveralDepartamentosResponse,
 	type DepartamentoParams
 } from './interfaces'
 
@@ -51,8 +51,8 @@ export class Argeo {
 		return await this.makeRequest('/api/provincias', params)
 	}
 
-	async departamentos(params: DepartamentoParams): Promise<ArgeoResponse<DepartamentoResponse>>
-	async departamentos(params: DepartamentoParams[]): Promise<ArgeoResponse<SeveralDepartamentoResponse>>
+	async departamentos(params: DepartamentoParams): Promise<ArgeoResponse<DepartamentosResponse>>
+	async departamentos(params: DepartamentoParams[]): Promise<ArgeoResponse<SeveralDepartamentosResponse>>
 	async departamentos(params: DepartamentoParams | DepartamentoParams[] = {}): Promise<ArgeoResponse> {
 		return await this.makeRequest('/api/departamentos', params)
 	}

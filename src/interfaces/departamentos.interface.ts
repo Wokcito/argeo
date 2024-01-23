@@ -2,11 +2,11 @@ import { type Coordenadas } from './coordenadas.interface'
 import { type Provincia } from './provincias.interface'
 import { type RequestParams } from './request-params.interface'
 
-export interface SeveralDepartamentoResponse {
-    resultados: DepartamentoResponse[]
+export interface SeveralDepartamentosResponse {
+    resultados: DepartamentosResponse[]
 }
 
-export interface DepartamentoResponse {
+export interface DepartamentosResponse {
     cantidad: number
     total: number
     inicio: number
@@ -17,14 +17,18 @@ export interface DepartamentoResponse {
 interface Departamento {
     id: string
     nombre: string
-    nombre_completo: string
-    provincia: Pick<Provincia, 'id' | 'nombre'>
-    centroide: Coordenadas
-    categoria: 'Departamento'
+    nombre_completo?: string
+    provincia?: ProvinciaRef
+    centroide?: Coordenadas
+    categoria?: string
+    fuente?: string
+}
+
+interface ProvinciaRef extends Partial<Pick<Provincia, 'id' | 'nombre'>> {
+    interseccion?: unknown
 }
 
 export interface DepartamentoParams extends RequestParams {
-    provincia?: Partial<Pick<Provincia, 'id' | 'nombre'>>
     campos?: Field[]
 }
 

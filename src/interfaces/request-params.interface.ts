@@ -3,6 +3,7 @@ import { type Formato } from './formato.type'
 export interface RequestParams {
     id?: string
     nombre?: string
+    provincia?: ProvinciaRef
     interseccion?: string
     orden?: string
     aplanar?: boolean
@@ -11,4 +12,9 @@ export interface RequestParams {
     inicio?: number
     exacto?: boolean
     formato?: Formato
+}
+
+interface ProvinciaRef {
+    id?: string | string[]
+    nombre?: string
 }
