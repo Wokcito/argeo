@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest'
-import { setupServer } from 'msw/node'
+import { type SetupServer, setupServer } from 'msw/node'
 import { Argeo } from '../../src'
 import {
 	getDepartamentos,
@@ -10,14 +10,18 @@ import {
 import { MOCKED_API_BASE_URL } from '../../src/constants'
 import { type DepartamentoParams } from '../../src/interfaces'
 
-const argeo = new Argeo({ baseURL: MOCKED_API_BASE_URL })
-const server = setupServer(...[getDepartamentos, postDepartamentos])
-
-beforeAll(() => { server.listen() })
-afterEach(() => { server.resetHandlers() })
-afterAll(() => { server.close() })
-
 describe('departamentos', () => {
+	let argeo: Argeo
+	let server: SetupServer
+
+	beforeAll(() => {
+		server = setupServer(...[getDepartamentos, postDepartamentos])
+		server.listen()
+		argeo = new Argeo({ baseURL: MOCKED_API_BASE_URL })
+	})
+	afterEach(() => { server.resetHandlers() })
+	afterAll(() => { server.close() })
+
 	it('returns data of a single search correctly', async () => {
 		const correctResponse = await argeo.departamentos({ nombre: 'parana' })
 		expect(correctResponse.data).toBeDefined()

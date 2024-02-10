@@ -1,4 +1,4 @@
-import { setupServer } from 'msw/node'
+import { type SetupServer, setupServer } from 'msw/node'
 import { Argeo } from '../../src'
 import {
 	getProvincias,
@@ -9,11 +9,15 @@ import {
 import { MOCKED_API_BASE_URL } from '../../src/constants'
 import { type ProvinciaParams } from '../../src/interfaces'
 
-const argeo = new Argeo({ baseURL: MOCKED_API_BASE_URL })
-const server = setupServer(...[getProvincias, postProvincias])
-
 describe('provincias', () => {
-	beforeAll(() => { server.listen() })
+	let argeo: Argeo
+	let server: SetupServer
+
+	beforeAll(() => {
+		server = setupServer(...[getProvincias, postProvincias])
+		server.listen()
+		argeo = new Argeo({ baseURL: MOCKED_API_BASE_URL })
+	})
 	afterEach(() => { server.resetHandlers() })
 	afterAll(() => { server.close() })
 
