@@ -29,6 +29,6 @@ describe('Argeo', () => {
 	it('has all expected methods', async () => {
 		const argeo = new Argeo()
 
-		expect(argeo.provincias).toBeTypeOf('function')
+		expect(typeof argeo.provincias).toBe('function')
 	})
 })

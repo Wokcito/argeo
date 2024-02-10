@@ -3,6 +3,6 @@ import { type DepartamentoParams } from './departamentos.interface'
 
 export type AllParams =
       ProvinciaParams
-    | ProvinciaParams[]
-    | DepartamentoParams
-    | DepartamentoParams[]
+      | ProvinciaParams[]
+      | DepartamentoParams
+      | DepartamentoParams[]

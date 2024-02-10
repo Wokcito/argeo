@@ -8,7 +8,7 @@ import { sign } from 'jsonwebtoken'
  *
  * @see {@link https://datosgobar.github.io/georef-ar-api/jwt-token/}
  */
-export function generateJWT(secret: string, key: string): string {
+export function generateJWT (secret: string, key: string): string {
 	if (typeof secret !== 'string') {
 		throw new Error('The secret is required')
 	}

@@ -3,7 +3,7 @@ import { type ArgeoConfig } from '../interfaces'
 import { DEFAULT_BASE_URL } from '../constants'
 import { generateJWT } from './generate-jwt'
 
-export function generateAxiosInstance({ baseURL, token }: ArgeoConfig): AxiosInstance {
+export function generateAxiosInstance ({ baseURL, token }: ArgeoConfig): AxiosInstance {
 	const regexpJWT = /^[\w-]+\.[\w-]+\.[\w-]+$/
 
 	if (typeof token === 'string' && !regexpJWT.test(token)) {
