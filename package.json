@@ -10,8 +10,8 @@
     "repository": "https://github.com/Wokcito/argeo",
     "bugs": "https://github.com/Wokcito/argeo/issues",
     "scripts": {
-        "build": "tsc",
-        "prepare": "husky install | chmod ug+x .husky/*",
+        "build": "tsc --project tsconfig.build.json",
+        "prepare": "husky",
         "publish": "npm run build && npm publish",
         "test": "vitest"
     },
@@ -45,9 +45,12 @@
         "jsonwebtoken": "9.0.2"
     },
     "lint-staged": {
-        "./src/**/*.ts": [
-            "eslint"
-        ]
+        "./src/**/*": [
+            "eslint --fix"
+        ],
+		"./test/**/*": [
+			"eslint --fix"
+		]
     },
     "commitlint": {
         "extends": [

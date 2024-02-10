@@ -1,13 +1,9 @@
 {
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules", "dist"],
     "compilerOptions": {
         "target": "es2022",
         "module": "commonjs",
-        "rootDir": "src",
         "declaration": true,
         "declarationMap": true,
-        "outDir": "dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
