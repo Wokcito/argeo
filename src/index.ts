@@ -34,9 +34,19 @@ export class Argeo {
 	private async makeRequest (endpoint: string, params: AllParams = {}): Promise<ArgeoResponse<unknown>> {
 		try {
 			if (Array.isArray(params)) {
-				const { data } = await this.instance.post(endpoint, { provincias: params })
+				const { data } = await this.instance.post(endpoint, {
+					provincias: params.map((param, index) => {
+						if (param.campos === undefined) return param
+						if (!Array.isArray(param.campos)) throw new Error(`The field 'campos' in the index ${index} must be an array`)
+
+						return { ...param, campos: param.campos.join(',') }
+					})
+				})
+
 				return { data, error: null }
 			}
+
+			if (params.campos !== undefined && !Array.isArray(params.campos)) throw new Error('The field \'campos\' must be an array')
 
 			const { data } = await this.instance.get(endpoint, {
 				params: {
@@ -44,8 +54,10 @@ export class Argeo {
 					campos: params.campos?.join(',')
 				}
 			})
+
 			return { data, error: null }
 		} catch (error) {
+			console.log(error)
 			return { data: null, error: (error as AxiosError).response?.data }
 		}
 	}

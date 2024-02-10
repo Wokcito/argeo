@@ -5,7 +5,6 @@ export interface RequestParams {
 	interseccion?: string
 	orden?: string
 	aplanar?: boolean
-	campos?: unknown
 	max?: number
 	inicio?: number
 	exacto?: boolean
