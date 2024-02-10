@@ -25,10 +25,10 @@ export interface Provincia {
 }
 
 export interface ProvinciaParams extends Omit<RequestParams, 'provincia'> {
-	campos?: Field[]
+	campos?: ProvinciaField[]
 }
 
-type Field =
+type ProvinciaField =
       'categoria'
       | 'centroide.lat'
       | 'centroide.lon'

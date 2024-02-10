@@ -29,10 +29,10 @@ interface ProvinciaRef extends Partial<Pick<Provincia, 'id' | 'nombre'>> {
 }
 
 export interface DepartamentoParams extends RequestParams {
-	campos?: Field[]
+	campos?: DepartamentoField[]
 }
 
-type Field =
+type DepartamentoField =
       'categoria'
       | 'centroide.lat'
       | 'centroide.lon'
