@@ -1,5 +1,3 @@
-import { type Formato } from './formato.type'
-
 export interface RequestParams {
 	id?: string
 	nombre?: string
@@ -11,7 +9,6 @@ export interface RequestParams {
 	max?: number
 	inicio?: number
 	exacto?: boolean
-	formato?: Formato
 }
 
 interface ProvinciaRef {
