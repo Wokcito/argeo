@@ -3,7 +3,7 @@ export interface ArgeoConfig {
 	token?: string | Token
 }
 
-interface Token {
+export interface Token {
 	secret: string
 	key: string
 }

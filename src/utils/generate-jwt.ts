@@ -9,11 +9,11 @@ import { sign } from 'jsonwebtoken'
  * @see {@link https://datosgobar.github.io/georef-ar-api/jwt-token/}
  */
 export function generateJWT (secret: string, key: string): string {
-	if (typeof secret !== 'string') {
+	if (typeof secret !== 'string' || secret === '') {
 		throw new Error('The secret is required')
 	}
 
-	if (typeof key !== 'string') {
+	if (typeof key !== 'string' || key === '') {
 		throw new Error('The key is required')
 	}
 

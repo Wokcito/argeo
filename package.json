@@ -13,7 +13,8 @@
         "build": "tsc --project tsconfig.build.json",
         "prepare": "husky",
         "publish": "npm run build && npm publish",
-        "test": "vitest"
+        "test": "vitest",
+		"test:e2e": "vitest --config vitest.config.e2e.mts"
     },
     "keywords": [
         "georef",
@@ -48,9 +49,9 @@
         "./src/**/*": [
             "eslint --fix"
         ],
-		"./test/**/*": [
-			"eslint --fix"
-		]
+        "./test/**/*": [
+            "eslint --fix"
+        ]
     },
     "commitlint": {
         "extends": [

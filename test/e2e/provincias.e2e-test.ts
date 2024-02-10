@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest'
 import { setupServer } from 'msw/node'
 import { Argeo } from '../../src'
 import {
@@ -8,22 +7,23 @@ import {
 	postProvinciasError
 } from '../mocks'
 import { MOCKED_API_BASE_URL } from '../../src/constants'
+import { type ProvinciaParams } from '../../src/interfaces'
 
 const argeo = new Argeo({ baseURL: MOCKED_API_BASE_URL })
 const server = setupServer(...[getProvincias, postProvincias])
 
-beforeAll(() => { server.listen() })
-afterEach(() => { server.resetHandlers() })
-afterAll(() => { server.close() })
-
 describe('provincias', () => {
+	beforeAll(() => { server.listen() })
+	afterEach(() => { server.resetHandlers() })
+	afterAll(() => { server.close() })
+
 	it('returns data of a single search correctly', async () => {
 		const correctResponse = await argeo.provincias({ nombre: 'Entre rios' })
 		expect(correctResponse.data).toBeDefined()
 		expect(correctResponse.error).toBe(null)
 
 		server.use(...[getProvinciasError])
-		const errorResponse = await argeo.provincias()
+		const errorResponse = await argeo.provincias(undefined as unknown as ProvinciaParams)
 		expect(errorResponse.data).toBe(null)
 		expect(errorResponse.error).toBeDefined()
 	})
