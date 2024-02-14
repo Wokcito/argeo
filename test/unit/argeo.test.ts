@@ -1,32 +1,44 @@
 import { Argeo } from '../../src'
 import { generateJWT } from '../../src/utils'
 import { DEFAULT_BASE_URL } from '../../src/constants'
-import { type AxiosInstance } from 'axios'
 
 describe('Argeo', () => {
-	const personalSecret = 'personalSecret'
-	const personalKey = 'personalKey'
 	const secret = 'secret'
 	const key = 'key'
 
-	it(`must use the default baseURL (${DEFAULT_BASE_URL}) if other one is not provided`, () => {
-		const argeo = new Argeo() as unknown as { instance: AxiosInstance }
-		expect(argeo.instance.defaults.baseURL).toBe(DEFAULT_BASE_URL)
+	it(`should use the default baseURL (${DEFAULT_BASE_URL}) if other one is not provided`, () => {
+		const argeo = new Argeo()
+		const baseURL = argeo.getBaseURL()
+		expect(baseURL).toBe(DEFAULT_BASE_URL)
 	})
 
-	it('must use the token provided by default unless the secret and key exist', () => {
+	it('should set the token provided in the options', () => {
 		const token = generateJWT(secret, key)
-		const argeoToken = new Argeo({ token }) as unknown as { instance: AxiosInstance }
+		const argeo = new Argeo({ token })
 
-		const argeoTokenAuthorization = argeoToken.instance.defaults.headers.Authorization as string
-		expect(argeoTokenAuthorization.split(' ')).toMatchObject(['Bearer', token])
+		const options = argeo.getOptions()
+		const headers = options?.headers as Headers
+		const existAuthorization = headers.has('Authorization')
+		expect(existAuthorization).toBe(true)
 
-		const argeoSecretKey = new Argeo({ token: { secret: personalSecret, key: personalKey } }) as unknown as { instance: AxiosInstance }
-		const argeoSecretKeyAuthorization = argeoSecretKey.instance.defaults.headers.Authorization as string
-		expect(argeoSecretKeyAuthorization.split(' ')).not.toMatchObject(['Bearer', token])
+		const value = headers.get('Authorization')
+		expect(value?.split(' ')).toMatchObject(['Bearer', token])
 	})
 
-	it('has all expected methods', async () => {
+	it('should set the token generated with the secret and key in the options', () => {
+		const argeo = new Argeo({ token: { secret, key } })
+
+		const options = argeo.getOptions()
+		const headers = options?.headers as Headers
+		const existAuthorization = headers.has('Authorization')
+		expect(existAuthorization).toBe(true)
+
+		const [type, token] = headers.get('Authorization')?.split(' ') as unknown as string[]
+		expect(type).toBe('Bearer')
+		expect(token).toMatch(/^[\w-]+\.[\w-]+\.[\w-]+$/)
+	})
+
+	it('should have all expected methods', async () => {
 		const argeo = new Argeo()
 
 		expect(typeof argeo.provincias).toBe('function')

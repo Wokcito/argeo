@@ -3,7 +3,6 @@ import { generateJWT } from '../../../src/utils'
 
 describe('generateJWT', () => {
 	const secret = 'secret'
-	const wrongSecret = 'wrongSecret'
 	const key = 'key'
 
 	it('should obtain a secret and a key', () => {
@@ -17,7 +16,7 @@ describe('generateJWT', () => {
 		const token = generateJWT(secret, key)
 		expect(generateJWT(secret, key)).toBeTypeOf('string')
 		expect(() => verify(token, secret)).not.toThrow()
-		expect(() => verify(token, wrongSecret)).toThrow()
+		expect(() => verify(token, 'wrongsecret')).toThrow()
 	})
 
 	it('should return a JWT with a payload with this format: { iss: key }', () => {
