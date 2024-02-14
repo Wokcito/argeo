@@ -7,8 +7,8 @@
     "files": [
         "dist"
     ],
-    "repository": "https://github.com/Wokcito/argeo",
-    "bugs": "https://github.com/Wokcito/argeo/issues",
+    "repository": "https://github.com/wokcito/argeo",
+    "bugs": "https://github.com/wokcito/argeo/issues",
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
         "prepare": "husky",
