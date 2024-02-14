@@ -1,13 +1,13 @@
 import { type SetupServer, setupServer } from 'msw/node'
-import { Argeo } from '../../src'
+import { Argeo } from '../../../src'
 import {
 	getProvincias,
 	getProvinciasError,
 	postProvincias,
 	postProvinciasError
-} from '../mocks'
-import { MOCKED_API_BASE_URL } from '../../src/constants'
-import { type ProvinciaParams } from '../../src/interfaces'
+} from '../../mocks'
+import { MOCKED_API_BASE_URL } from '../../../src/constants'
+import { type ProvinciaParams } from '../../../src/interfaces'
 
 describe('provincias', () => {
 	let argeo: Argeo

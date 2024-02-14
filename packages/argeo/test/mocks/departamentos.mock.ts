@@ -70,8 +70,7 @@ export const postDepartamentos = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, 
 				total: 1
 			}
 		]
-	}
-	)
+	})
 })
 
 export const getDepartamentosError = http.get(`${MOCKED_API_BASE_URL}${endpoint}`, () => {

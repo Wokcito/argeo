@@ -4,6 +4,7 @@ import {
 	type ArgeoConfig,
 	type ArgeoResponse,
 	type AllParams,
+	type ArgeoPlugin,
 
 	// Provincias
 	type ProvinciasResponse,
@@ -27,12 +28,19 @@ import {
 export class Argeo {
 	private readonly options: RequestInit
 	private readonly baseURL: string
+	private readonly plugins: ArgeoPlugin[] | undefined
 
-	constructor ({ baseURL, token }: ArgeoConfig = {}) {
+	constructor ({
+		baseURL,
+		token,
+		plugins
+	}: ArgeoConfig = {}) {
 		this.options = createRequestOptions({ baseURL, token })
 
 		if (typeof baseURL === 'string' && baseURL.length < 1) throw new Error('Invalid baseURL')
 		this.baseURL = typeof baseURL === 'string' ? baseURL : DEFAULT_BASE_URL
+
+		this.plugins = plugins
 	}
 
 	getBaseURL (): string {
@@ -43,7 +51,7 @@ export class Argeo {
 		return this.options
 	}
 
-	private async makeRequest (endpoint: string, params: AllParams = {}): Promise<ArgeoResponse<unknown>> {
+	private async makeRequest <T = unknown>(endpoint: string, params: AllParams = {}): Promise<ArgeoResponse<T>> {
 		try {
 			if (Array.isArray(params)) {
 				const response: Response = await fetch(this.baseURL + endpoint, {
@@ -79,20 +87,36 @@ export class Argeo {
 		}
 	}
 
+	private async interceptResponse <T = unknown>(response: ArgeoResponse<T>): Promise<ArgeoResponse<any>> {
+		if (this.plugins === undefined) return response
+
+		let interceptedResponse = response
+		const pluginPromises = this.plugins.map(async plugin => { interceptedResponse = await plugin.interceptResponse(interceptedResponse) })
+		await Promise.allSettled(pluginPromises)
+		return interceptedResponse
+	}
+
 	async provincias (params: ProvinciaParams): Promise<ArgeoResponse<ProvinciasResponse>>
 	async provincias (params: ProvinciaParams[]): Promise<ArgeoResponse<SeveralProvinciasResponse>>
+	async provincias <T>(params: ProvinciaParams): Promise<ArgeoResponse<T>>
+	async provincias <T>(params: ProvinciaParams[]): Promise<ArgeoResponse<T>>
 	async provincias (params: ProvinciaParams | ProvinciaParams[] = {}): Promise<ArgeoResponse> {
-		return await this.makeRequest('/api/provincias', params)
+		const response = await this.makeRequest<ProvinciasResponse | SeveralProvinciasResponse>('/api/provincias', params)
+		return await this.interceptResponse<ProvinciasResponse | SeveralProvinciasResponse>(response)
 	}
 
 	async departamentos (params: DepartamentoParams): Promise<ArgeoResponse<DepartamentosResponse>>
 	async departamentos (params: DepartamentoParams[]): Promise<ArgeoResponse<SeveralDepartamentosResponse>>
+	async departamentos <T>(params: DepartamentoParams): Promise<ArgeoResponse<T>>
+	async departamentos <T>(params: DepartamentoParams[]): Promise<ArgeoResponse<T>>
 	async departamentos (params: DepartamentoParams | DepartamentoParams[] = {}): Promise<ArgeoResponse> {
 		return await this.makeRequest('/api/departamentos', params)
 	}
 
 	async municipios (params: MunicipioParams): Promise<ArgeoResponse<MunicipiosResponse>>
 	async municipios (params: MunicipioParams[]): Promise<ArgeoResponse<SeveralMunicipiosResponse>>
+	async municipios <T>(params: MunicipioParams): Promise<ArgeoResponse<T>>
+	async municipios <T>(params: MunicipioParams[]): Promise<ArgeoResponse<T>>
 	async municipios (params: MunicipioParams | MunicipioParams[] = {}): Promise<ArgeoResponse> {
 		return await this.makeRequest('/api/municipios', params)
 	}

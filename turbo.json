@@ -1,0 +1,17 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"]
+		},
+		"test": {
+			"inputs": ["src/**/*.ts", "*.test.ts", "*.e2e-test.ts"]
+		},
+		"test:unit": {
+			"inputs": ["src/**/*.ts", "*.test.ts"]
+		},
+		"test:e2e": {
+			"inputs": ["src/**/*.ts", "*.e2e-test.ts"]
+		}
+	}
+}

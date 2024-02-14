@@ -13,7 +13,7 @@ export const getProvincias = http.get(`${MOCKED_API_BASE_URL}${endpoint}`, () =>
 	})
 })
 
-export const postProvincias = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, async ({ request }) => {
+export const postProvincias = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, async () => {
 	return HttpResponse.json({
 		resultados: [
 			{
@@ -31,8 +31,7 @@ export const postProvincias = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, asy
 				total: 1
 			}
 		]
-	}
-	)
+	})
 })
 
 export const getProvinciasError = http.get(`${MOCKED_API_BASE_URL}${endpoint}`, () => {

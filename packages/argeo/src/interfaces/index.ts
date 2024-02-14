@@ -1,5 +1,6 @@
 export * from './all-params.interface'
 export * from './argeo-config.interface'
+export * from './argeo-plugin.interface'
 export * from './argeo-response.interface'
 export * from './provincias.interface'
 export * from './departamentos.interface'

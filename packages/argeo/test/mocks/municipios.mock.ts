@@ -24,7 +24,7 @@ export const getMunicipios = http.get(`${MOCKED_API_BASE_URL}${endpoint}`, () =>
 	})
 })
 
-export const postMunicipios = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, async ({ request }) => {
+export const postMunicipios = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, async () => {
 	return HttpResponse.json({
 		resultados: [
 			{
@@ -64,8 +64,7 @@ export const postMunicipios = http.post(`${MOCKED_API_BASE_URL}${endpoint}`, asy
 				]
 			}
 		]
-	}
-	)
+	})
 })
 
 export const getMunicipiosError = http.get(`${MOCKED_API_BASE_URL}${endpoint}`, () => {
