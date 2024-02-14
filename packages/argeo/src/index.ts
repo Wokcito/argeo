@@ -8,16 +8,13 @@ import {
 
 	// Provincias
 	type ProvinciasResponse,
-	type SeveralProvinciasResponse,
 	type ProvinciaParams,
 
 	// Departamentos
 	type DepartamentosResponse,
-	type SeveralDepartamentosResponse,
 	type DepartamentoParams,
 
 	// Municipios
-	type SeveralMunicipiosResponse,
 	type MunicipiosResponse,
 	type MunicipioParams
 } from './interfaces'
@@ -70,7 +67,7 @@ export class Argeo {
 				const data = await response.json()
 				if (response.status >= 300) throw new Error(JSON.stringify(data))
 
-				return { data, error: null }
+				return { data: data.resultados, error: null }
 			}
 
 			if (params.campos !== undefined && !Array.isArray(params.campos)) throw new Error('The field \'campos\' must be an array')
@@ -97,27 +94,29 @@ export class Argeo {
 	}
 
 	async provincias (params: ProvinciaParams): Promise<ArgeoResponse<ProvinciasResponse>>
-	async provincias (params: ProvinciaParams[]): Promise<ArgeoResponse<SeveralProvinciasResponse>>
+	async provincias (params: ProvinciaParams[]): Promise<ArgeoResponse<ProvinciasResponse[]>>
 	async provincias <T>(params: ProvinciaParams): Promise<ArgeoResponse<T>>
 	async provincias <T>(params: ProvinciaParams[]): Promise<ArgeoResponse<T>>
 	async provincias (params: ProvinciaParams | ProvinciaParams[] = {}): Promise<ArgeoResponse> {
-		const response = await this.makeRequest<ProvinciasResponse | SeveralProvinciasResponse>('/api/provincias', params)
-		return await this.interceptResponse<ProvinciasResponse | SeveralProvinciasResponse>(response)
+		const response = await this.makeRequest<ProvinciasResponse | ProvinciasResponse[]>('/api/provincias', params)
+		return await this.interceptResponse<ProvinciasResponse | ProvinciasResponse[]>(response)
 	}
 
 	async departamentos (params: DepartamentoParams): Promise<ArgeoResponse<DepartamentosResponse>>
-	async departamentos (params: DepartamentoParams[]): Promise<ArgeoResponse<SeveralDepartamentosResponse>>
+	async departamentos (params: DepartamentoParams[]): Promise<ArgeoResponse<DepartamentosResponse[]>>
 	async departamentos <T>(params: DepartamentoParams): Promise<ArgeoResponse<T>>
 	async departamentos <T>(params: DepartamentoParams[]): Promise<ArgeoResponse<T>>
 	async departamentos (params: DepartamentoParams | DepartamentoParams[] = {}): Promise<ArgeoResponse> {
-		return await this.makeRequest('/api/departamentos', params)
+		const response = await this.makeRequest<DepartamentosResponse | DepartamentosResponse[]>('/api/departamentos', params)
+		return await this.interceptResponse<DepartamentosResponse | DepartamentosResponse[]>(response)
 	}
 
 	async municipios (params: MunicipioParams): Promise<ArgeoResponse<MunicipiosResponse>>
-	async municipios (params: MunicipioParams[]): Promise<ArgeoResponse<SeveralMunicipiosResponse>>
+	async municipios (params: MunicipioParams[]): Promise<ArgeoResponse<MunicipiosResponse[]>>
 	async municipios <T>(params: MunicipioParams): Promise<ArgeoResponse<T>>
 	async municipios <T>(params: MunicipioParams[]): Promise<ArgeoResponse<T>>
 	async municipios (params: MunicipioParams | MunicipioParams[] = {}): Promise<ArgeoResponse> {
-		return await this.makeRequest('/api/municipios', params)
+		const response = await this.makeRequest<MunicipiosResponse | MunicipiosResponse[]>('/api/municipios', params)
+		return await this.interceptResponse<MunicipiosResponse | MunicipiosResponse[]>(response)
 	}
 }

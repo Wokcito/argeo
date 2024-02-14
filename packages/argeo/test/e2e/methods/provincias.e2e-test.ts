@@ -34,7 +34,7 @@ describe('provincias', () => {
 
 	it('returns data of several searchs correctly', async () => {
 		const correctResponse = await argeo.provincias([{ nombre: 'Entre rios' }, { nombre: 'Entre rios' }])
-		expect(correctResponse.data).toBeDefined()
+		expect(Array.isArray(correctResponse.data)).toBe(true)
 		expect(correctResponse.error).toBe(null)
 
 		server.use(...[postProvinciasError])

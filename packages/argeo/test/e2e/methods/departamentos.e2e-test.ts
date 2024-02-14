@@ -35,7 +35,7 @@ describe('departamentos', () => {
 
 	it('returns data of several searchs correctly', async () => {
 		const correctResponse = await argeo.departamentos([{ nombre: 'parana' }, { nombre: 'parana' }])
-		expect(correctResponse.data).toBeDefined()
+		expect(Array.isArray(correctResponse.data)).toBe(true)
 		expect(correctResponse.error).toBe(null)
 
 		server.use(...[postDepartamentosError])
